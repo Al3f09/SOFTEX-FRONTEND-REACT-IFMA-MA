@@ -6,6 +6,60 @@
     <title>Data por Extenso</title>
 </head>
 <body>
-    <h1>Adicionado Função</h1>    
+     
+    <h2>Converter a data por Extenso</h2>
+
+    <label for="Digite a data (dd/mm/aaaa)"></label>
+
+    <input type="text" id="dataInput" placeholder="Ex: 22/04/2025">
+<button onclick="converterData()">Converter</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function converterData() {
+            const input = document.getElementById("dataInput").value.trim();
+            const partes = input.split("/");
+        
+            // Verifica se o formato está correto
+            if (partes.length !== 3) {
+                document.getElementById("resultado").textContent = "Formato inválido! Use dd/mm/aaaa.";
+                return;
+            }
+        
+            let dia = parseInt(partes[0]);
+            let mes = parseInt(partes[1]);
+            let ano = parseInt(partes[2]);
+        
+            // Array com os meses por extenso
+            const meses = [
+                "janeiro", "fevereiro", "março", "abril", "maio", "junho",
+                "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+            ];
+        
+            // Função para checar ano bissexto
+            function bissexto(ano) {
+                return (ano % 4 === 0 && ano % 100 !== 0) || (ano % 400 === 0);
+            }
+        
+            // Dias máximos por mês
+            const diasNoMes = [31, (bissexto(ano) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        
+            // Validação da data
+            if (isNaN(dia) || isNaN(mes) || isNaN(ano) ||
+                mes < 1 || mes > 12 || dia < 1 || dia > diasNoMes[mes - 1]) {
+                document.getElementById("resultado").textContent = "Data inválida!";
+                return;
+            }
+        
+            // Monta a data por extenso
+            const dataExtenso = `${dia} de ${meses[mes - 1]} de ${ano}`;
+            document.getElementById("resultado").textContent = dataExtenso;
+        }
+        </script>
+        
+        </body>
+        </html>
+
 </body>
 </html>
